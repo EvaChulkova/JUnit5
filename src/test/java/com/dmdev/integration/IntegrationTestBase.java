@@ -19,6 +19,7 @@ public abstract class IntegrationTestBase {
                 expiration_date DATETIME NOT NULL ,
                 status VARCHAR(16) NOT NULL ,
                 UNIQUE (user_id, name)
+                
             );
             """;
 
