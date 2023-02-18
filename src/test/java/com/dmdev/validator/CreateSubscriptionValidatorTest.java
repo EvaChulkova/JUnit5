@@ -18,7 +18,7 @@ class CreateSubscriptionValidatorTest {
                 .userId(1)
                 .name("Jane")
                 .provider(Provider.APPLE.name())
-                .expirationDate(Instant.now())
+                .expirationDate(Instant.parse("2023-10-10T10:15:30.345Z"))
                 .build();
 
         ValidationResult actualResult = createSubscriptionValidator.validate(subscriptionDto);
@@ -29,10 +29,10 @@ class CreateSubscriptionValidatorTest {
     @Test
     void invalidUserId() {
         CreateSubscriptionDto subscriptionDto = CreateSubscriptionDto.builder()
-                .userId(0)
+                .userId(null)
                 .name("Jane")
                 .provider(Provider.APPLE.name())
-                .expirationDate(Instant.now())
+                .expirationDate(Instant.parse("2023-10-10T10:15:30.345Z"))
                 .build();
 
         ValidationResult actualResult = createSubscriptionValidator.validate(subscriptionDto);
@@ -47,7 +47,7 @@ class CreateSubscriptionValidatorTest {
                 .userId(1)
                 .name("")
                 .provider(Provider.APPLE.name())
-                .expirationDate(Instant.now())
+                .expirationDate(Instant.parse("2023-10-10T10:15:30.345Z"))
                 .build();
 
         ValidationResult actualResult = createSubscriptionValidator.validate(subscriptionDto);
@@ -56,4 +56,33 @@ class CreateSubscriptionValidatorTest {
         assertThat(actualResult.getErrors().get(0).getCode()).isEqualTo(101);
     }
 
+    @Test
+    void invalidProvider() {
+        CreateSubscriptionDto subscriptionDto = CreateSubscriptionDto.builder()
+                .userId(1)
+                .name("Jane")
+                .provider("")
+                .expirationDate(Instant.parse("2023-10-10T10:15:30.345Z"))
+                .build();
+
+        ValidationResult actualResult = createSubscriptionValidator.validate(subscriptionDto);
+
+        assertThat(actualResult.getErrors()).hasSize(1);
+        assertThat(actualResult.getErrors().get(0).getCode()).isEqualTo(102);
+    }
+
+    @Test
+    void invalidExpirationDate() {
+        CreateSubscriptionDto subscriptionDto = CreateSubscriptionDto.builder()
+                .userId(1)
+                .name("Jane")
+                .provider(Provider.APPLE.name())
+                .expirationDate(Instant.parse("2022-10-10T10:15:30.345Z"))
+                .build();
+
+        ValidationResult actualResult = createSubscriptionValidator.validate(subscriptionDto);
+
+        assertThat(actualResult.getErrors()).hasSize(1);
+        assertThat(actualResult.getErrors().get(0).getCode()).isEqualTo(103);
+    }
 }
