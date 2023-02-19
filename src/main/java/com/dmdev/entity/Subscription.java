@@ -20,4 +20,5 @@ public class Subscription implements BaseEntity<Integer> {
     private Provider provider;
     private Instant expirationDate;
     private Status status;
+
 }

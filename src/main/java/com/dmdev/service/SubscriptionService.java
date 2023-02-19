@@ -16,7 +16,6 @@ import java.time.Instant;
 
 @RequiredArgsConstructor
 public class SubscriptionService {
-
     private final SubscriptionDao subscriptionDao;
     private final CreateSubscriptionMapper createSubscriptionMapper;
     private final CreateSubscriptionValidator createSubscriptionValidator;

@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ValidationResult {
-
     @Getter
     private final List<Error> errors = new ArrayList<>();
 

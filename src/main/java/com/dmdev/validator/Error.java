@@ -6,4 +6,5 @@ import lombok.Value;
 public class Error {
     Integer code;
     String message;
+
 }

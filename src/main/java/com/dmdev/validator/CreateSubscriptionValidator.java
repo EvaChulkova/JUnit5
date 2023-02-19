@@ -11,7 +11,6 @@ import static lombok.AccessLevel.PRIVATE;
 
 @NoArgsConstructor(access = PRIVATE)
 public class CreateSubscriptionValidator implements Validator<CreateSubscriptionDto> {
-
     private static final CreateSubscriptionValidator INSTANCE = new CreateSubscriptionValidator();
 
     public static CreateSubscriptionValidator getInstance() {
