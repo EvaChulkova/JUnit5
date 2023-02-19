@@ -85,4 +85,5 @@ class CreateSubscriptionValidatorTest {
         assertThat(actualResult.getErrors()).hasSize(1);
         assertThat(actualResult.getErrors().get(0).getCode()).isEqualTo(103);
     }
+
 }
