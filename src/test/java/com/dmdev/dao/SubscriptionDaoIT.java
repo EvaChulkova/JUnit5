@@ -6,7 +6,9 @@ import com.dmdev.entity.Subscription;
 import com.dmdev.integration.IntegrationTestBase;
 import org.junit.jupiter.api.Test;
 
+import java.time.Clock;
 import java.time.Instant;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class SubscriptionDaoIT extends IntegrationTestBase {
+    private static final Clock clock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
     private final SubscriptionDao subscriptionDao = SubscriptionDao.getInstance();
 
     @Test
@@ -100,7 +103,10 @@ class SubscriptionDaoIT extends IntegrationTestBase {
                 .userId(userId)
                 .name("Jane")
                 .provider(Provider.APPLE)
-                .expirationDate(Instant.now())
+                //.expirationDate(Instant.now())
+                .expirationDate(Instant.ofEpochSecond(169999999))
+                //.expirationDate(clock.instant())
+                //.expirationDate(Instant.now(clock))
                 .status(Status.ACTIVE)
                 .build();
     }

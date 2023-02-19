@@ -11,6 +11,7 @@ import com.dmdev.mapper.CreateSubscriptionMapper;
 import com.dmdev.validator.CreateSubscriptionValidator;
 import com.dmdev.validator.Error;
 import com.dmdev.validator.ValidationResult;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -22,11 +23,13 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.Clock;
 import java.time.Instant;
 import java.time.ZoneId;
-import java.util.List;
+import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -41,8 +44,6 @@ class SubscriptionServiceTest {
     private CreateSubscriptionMapper createSubscriptionMapper;
     @Mock
     private CreateSubscriptionValidator createSubscriptionValidator;
-    /*@Mock
-    private Clock clock;*/
     @InjectMocks
     private SubscriptionService subscriptionService;
 
@@ -58,24 +59,43 @@ class SubscriptionServiceTest {
         );
     }
 
-    @Test
-    void shouldThrowExceptionIfSubscriptionDtoIsInvalid() {
-        CreateSubscriptionDto subscriptionDto = getCreateSubscriptionDto();
-        ValidationResult validationResult = new ValidationResult();
-        validationResult.add(Error.of(100, "userId is invalid"));
-        doReturn(validationResult).when(createSubscriptionValidator).validate(subscriptionDto);
+    @Nested
+    class TestUpsert {
 
-        assertThrows(ValidationException.class, () -> subscriptionService.upsert(subscriptionDto));
-        verifyNoMoreInteractions(subscriptionDao, createSubscriptionMapper);
+        @Test
+        void shouldThrowExceptionIfSubscriptionDtoIsInvalid() {
+            CreateSubscriptionDto subscriptionDto = getCreateSubscriptionDto();
+            ValidationResult validationResult = new ValidationResult();
+            validationResult.add(Error.of(100, "userId is invalid"));
+            doReturn(validationResult).when(createSubscriptionValidator).validate(subscriptionDto);
+
+            assertThrows(ValidationException.class, () -> subscriptionService.upsert(subscriptionDto));
+            verifyNoMoreInteractions(subscriptionDao, createSubscriptionMapper);
+        }
+
+        @Test
+        void upsert() {
+            CreateSubscriptionDto createSubscriptionDto = getCreateSubscriptionDto();
+            Subscription subscription = getSubscription();
+
+            doReturn(new ValidationResult()).when(createSubscriptionValidator).validate(createSubscriptionDto);
+            doReturn(Collections.emptyList()).when(subscriptionDao).findByUserId(createSubscriptionDto.getUserId());
+            doReturn(subscription).when(createSubscriptionMapper).map(createSubscriptionDto);
+            doReturn(subscription).when(subscriptionDao).upsert(any());
+
+            Subscription actualResult = subscriptionService.upsert(createSubscriptionDto);
+
+            assertNotNull(actualResult);
+            Assertions.assertThat(actualResult).isEqualTo(subscription);
+            verify(subscriptionDao).findByUserId(createSubscriptionDto.getUserId());
+            verify(subscriptionDao).upsert(any());
+
+        }
     }
 
-    @Test
-    void upsert() {
-        CreateSubscriptionDto createSubscriptionDto = getCreateSubscriptionDto();
-        Subscription subscription = getSubscription();
-        List<Subscription> subscriptionList = doReturn(Optional.of(subscription)).when(subscriptionDao).findByUserId(99);
-        doReturn(subscription).when(subscription).getName().equals(createSubscriptionDto.getName());
-    }
+
+
+
 
     private static CreateSubscriptionDto getCreateSubscriptionDto() {
         return CreateSubscriptionDto.builder()
