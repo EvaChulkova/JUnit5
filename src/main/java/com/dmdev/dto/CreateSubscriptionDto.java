@@ -12,4 +12,5 @@ public class CreateSubscriptionDto {
     String name;
     String provider;
     Instant expirationDate;
+
 }

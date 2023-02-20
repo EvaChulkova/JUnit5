@@ -10,9 +10,7 @@ import static lombok.AccessLevel.PRIVATE;
 
 @NoArgsConstructor(access = PRIVATE)
 public class CreateSubscriptionMapper implements Mapper<CreateSubscriptionDto, Subscription> {
-
     private static final CreateSubscriptionMapper INSTANCE = new CreateSubscriptionMapper();
-
     public static CreateSubscriptionMapper getInstance() {
         return INSTANCE;
     }

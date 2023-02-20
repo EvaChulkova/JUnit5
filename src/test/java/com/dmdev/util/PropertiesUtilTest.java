@@ -17,7 +17,6 @@ class PropertiesUtilTest {
         assertEquals(expectedResult, actualResult);
     }
 
-
     static Stream<Arguments> getPropertyArgumentsForDB() {
         return Stream.of(
                 Arguments.of("db.url", "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1"),

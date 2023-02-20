@@ -29,6 +29,7 @@ public abstract class IntegrationTestBase {
              var statement = connection.createStatement()) {
             statement.execute(CREATE_SQL);
         }
+
     }
 
     @BeforeEach

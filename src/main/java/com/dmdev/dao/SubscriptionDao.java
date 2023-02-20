@@ -17,7 +17,6 @@ import java.util.Optional;
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
 public class SubscriptionDao implements Dao<Integer, Subscription> {
-
     private static final SubscriptionDao INSTANCE = new SubscriptionDao();
 
     private static final String GET_ALL_SQL = """

@@ -9,7 +9,6 @@ public enum Provider {
     public static Provider findByName(String name) {
         return findByNameOpt(name).orElseThrow();
     }
-
     public static Optional<Provider> findByNameOpt(String name) {
         return Arrays.stream(values())
                 .filter(provider -> provider.name().equalsIgnoreCase(name))

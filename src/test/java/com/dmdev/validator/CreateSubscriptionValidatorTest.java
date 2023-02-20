@@ -4,12 +4,15 @@ import com.dmdev.dto.CreateSubscriptionDto;
 import com.dmdev.entity.Provider;
 import org.junit.jupiter.api.Test;
 
+import java.time.Clock;
 import java.time.Instant;
+import java.time.ZoneId;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class CreateSubscriptionValidatorTest {
+    private static final Clock clock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
     private final CreateSubscriptionValidator createSubscriptionValidator = CreateSubscriptionValidator.getInstance();
 
     @Test
@@ -85,4 +88,5 @@ class CreateSubscriptionValidatorTest {
         assertThat(actualResult.getErrors()).hasSize(1);
         assertThat(actualResult.getErrors().get(0).getCode()).isEqualTo(103);
     }
+
 }

@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface Dao<K, T extends BaseEntity<K>> {
-
     default T upsert(T entity) {
         return entity.getId() != null
                 ? update(entity)

@@ -10,9 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.time.Instant;
 
 class CreateSubscriptionMapperTest {
-
     private final CreateSubscriptionMapper createSubscriptionMapper = CreateSubscriptionMapper.getInstance();
-
     @Test
     void map() {
         CreateSubscriptionDto subscriptionDto = CreateSubscriptionDto.builder()

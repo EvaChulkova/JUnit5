@@ -47,6 +47,7 @@ class SubscriptionServiceIT extends IntegrationTestBase {
         assertThat(actualResult.getStatus()).isEqualTo(expiredSubscription.getStatus());
     }
 
+
     @Test
     void cancel() {
         Subscription subscription = subscriptionDao.insert(getActiveSubscription(1));
