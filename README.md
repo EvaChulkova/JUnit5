@@ -1,10 +1,5 @@
 # junit5-trainer
 
-Задание:
-- Покрыть Unit и Integration тестами 80-90% кода
+Процент покрытия тестами:
 
-Технические детали:
-- Unit и Integration тесты должны запускаться в разных фазах жизненного цикла
-- Чтобы реализовать Integration тесты, необходимо наследоваться от класса IntegrationTestBase
-- Помнить про правильное именование Unit и Integration тестов (как классов, так и методов)
-- Чтобы проверить процент покрытия тестами, можно воспользоваться jacoco плагином, либо средствами IntelliJ IDEA (Run with Coverage)
+![image](https://user-images.githubusercontent.com/89831421/220061632-db8bad31-d1f7-4386-a5be-e25dae9e8d2b.png)
